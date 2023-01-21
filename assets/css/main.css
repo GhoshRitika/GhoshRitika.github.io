@@ -185,7 +185,7 @@ input, select, textarea {
 		font-weight: 900;
 		line-height: 1.5;
 		letter-spacing: 0.075em;
-		text-transform: uppercase;
+		text-transform: none;
 		margin: 0 0 1rem 0;
 	}
 
@@ -2634,8 +2634,9 @@ input, select, textarea {
 
 		.image.main {
 			display: block;
-			margin: 4rem 0;
-			width: 100%;
+			margin-right: 4rem;
+			margin-left: auto;
+			width: 75%;
 		}
 
 			.image.main:first-child {
@@ -2643,7 +2644,8 @@ input, select, textarea {
 			}
 
 			.image.main img {
-				width: 100%;
+				margin: 4rem 4rem 2rem 2rem;
+				width: 75%;
 			}
 
 		@media screen and (max-width: 736px) {
@@ -2863,7 +2865,7 @@ input, select, textarea {
 
 			ul.divided li {
 				border-top: solid 1px;
-				padding: 0.5rem 0;
+				padding: 2rem 0;
 			}
 
 				ul.divided li:first-child {
