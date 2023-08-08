@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>SLAM EKF Ritika Ghosh</title>
+		<title>Extended Kalman Filter with Landmark Detection Ritika Ghosh</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -23,7 +23,7 @@
 					</header>
 
 				<!-- Nav -->
-					<nav id="nav">
+					<nav id="nav">SLAM EKF
 						<ul class="links">
 							<li><a href="index.html">Home</a></li>
 							<li class="active"><a href="SLAM.html">SLAM: EKF Implementation</a></li>
@@ -43,44 +43,67 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<h1><a href="https://github.com/GhoshRitika/SLAM_ekf">SLAM: Extended Kalman Filter Implementation from Scratch</a></h1>
+									<h1><a href="https://github.com/GhoshRitika/SLAM_ekf">SLAM: Extended Kalman Filter with Landmark Detection</a></h1>
 								</header>
                                 <!-- <span class="image main"><img src="images/hockeybot_video.mp4" alt="" /></span> -->
                                 <video width="100%" height="100%" autoplay loop muted>
-                                    <source src="images/hockeybot_video.mp4" type="video/mp4">
-                                    <source src="hockeybot_video.ogg" type="video/ogg">
-                                  </video>
+									<source src="images/EKFlandmark.webm" type="video/webm">
+									<source src="EKFlandmark.ogg" type="video/ogg">
+								</video>
                                 <div class="box alt"></div>
 									<header>
 										<h2>Overview</h2>
 									</header>
-									<p> </p>
+									<p> The project entailed the creation of a comprehensive simulation environment to rigorously assess diverse components, including the EKF SLAM algorithm and landmark detection. To facilitate this evaluation, RViz served as a visualization tool, complemented by a simulated robot environment realized within a dedicated ROS2 node. The simulation accurately emulated the robot's movements, incorporating cylindrical obstacles to effectively validate the landmark detection algorithm, which leveraged LiDAR data.
+
+										Furthermore, the project encompassed the implementation of collision detection mechanisms, ensuring accurate interaction between the robot and its environment. The accompanying videos aptly showcase the outcomes of these simulation endeavors.
+
+										The core of the project is centered around implementing the EKF SLAM algorithm on a TurtleBot3 within the simulation. The result is demonstrated through three distinct robot representations:
+										<ul>
+											<li>Red: Ground truth</li>
+											<li>Blue: Odometry</li>
+											<li>Green: Extended Kalman Filter estimate</li>
+										</ul>
+										Additionally, cylindrical obstacles are displayed, categorized as follows:
+										<ul>
+											<li>Red: Ground truth</li>
+											<li>Blue: Detected landmarks after data association and circle fitting</li>
+											<li>Green: Obstacles detected through Extended Kalman Filter</li>
+										</ul>
+										</p>
 									<hr />
 
 								<!-- Lists -->
-									<h2>Odometry</h2>
+								<h2>2D Rigid Body Transformations, Kinematics and Odometry</h2>
 									<div class="row">
-										<div class="col-6 col-12-small">
-                                            <p></p>
-                                            <p>Checkout this a github <a href="https://github.com/GhoshRitika/HockeyBot/tree/main/moveit_helper">link</a> to the helper package for further details.</p>
-                                        </div>
-                                        <div class="col-6 col-12-small">
-                                            <a href="#" class="image fit"><img src="images/SimpleMove.gif" alt="" /></a>
-                                        </div>
+										<p>A C++ library was meticulously crafted to streamline calculations involving 2D rigid body transformations, differential drive kinematics and other dead reckoning algorithms. This library serves as a crucial utility throughout the project.
+
+											Central to the project's functionality, dedicated helper libraries were engineered from scratch in C++ to adeptly manage calculations associated with odometry, Extended Kalman Filter calculations, and various other tasks. These libraries are readily accessible within the turtlelib directory of the repository.</p>
                                     </div>
+
 									<hr />
 									<h2>Extended Kalman Filter</h2>
 									<div class="row">
-                                        <div class="col-6 col-12-small">
-                                            <a href="#" class="image fit"><img src="images/PuckTracking.gif" alt="" /></a>
-                                        </div>
-										<div class="col-6 col-12-small">
-                                            <p></p>
-                                        </div>
+										<p>The project's core focused on applying the extended Kalman filter (EKF) to achieve feature-based simultaneous localization and mapping (SLAM) – EKF-SLAM. This algorithm involved a three-step process: initialization, prediction, and update.
+
+											During each timestep, the algorithm leveraged both odometry and sensor measurements to estimate the robot's state and landmarks' positions. The prediction phase entailed refining the state estimate and propagating uncertainty via a linearized state transition model. Subsequently, the update step entailed the computation of theoretical measurements, the Kalman gain, and subsequent state and covariance updates.
+											
+											This central component was implemented meticulously. It encompassed two pivotal steps: prediction and update. The prediction phase iteratively anticipated new robot states and covariance, based on odometry inputs. In contrast, the update step progressively adjusted the predicted state, emphasizing newly identified landmarks. This intricate process calculated theoretical measurements from the projected state, with the Kalman gain crucially considering both anticipated and actual landmark locations. The gain played a pivotal role in fine-tuning the state and covariance to enhance accuracy and refine mapping.</p>
+										<p>Learn more about Extended Kalman Filter algorithm <a href="https://nu-msr.github.io/navigation_site/lectures/slam/slam.pdf">here.</a></p>
                                     </div>
                                     <hr />
+									<h2>Landmark Detection</h2>
+									<div class="row">
+										<p>For the detection of cylindrical landmarks utilizing laser scan data, a comprehensive approach amalgamating unsupervised and supervised learning was deployed. This process involved two distinct stages: clustering and circle fitting.
 
-									<h2>Supervised Learniing</h2>
+											In the initial phase, laser scanner points were judiciously grouped based on a predetermined distance threshold. Notably, clusters containing fewer than four points were excluded, ensuring only significant clusters representing genuine landmarks were retained. Following this step, a circle fitting algorithm was harnessed to deduce the optimal-fit circle for each cluster.
+											
+											Subsequently, a critical aspect involved radius filtering, which effectively categorized clusters as either "circle" or "not circle." Any cluster with a circle fit radius deemed excessively large or small was dismissed, thus enhancing the accuracy of landmark identification.
+											
+											Overall, this approach fused the power of unsupervised and supervised learning methods, offering a robust methodology for identifying and categorizing cylindrical landmarks using laser scan data.</p>
+                                    </div>
+                                    <hr />
+									<!-- <h2>Supervised Learniing</h2>
 									<dl>
 										<dt>Circle Detection:</dt>
                                             <a href="#" class="image right"><img src="images/InitSeq.gif" alt="" /></a>
@@ -102,7 +125,7 @@
                                             <a href="#" class="image fit"><img src="images/TrajCalLegend.png" alt="" /></a>
                                         </div>
                                     </div>
-                                    <hr />
+                                    <hr /> -->
 
                                     <h3>Know more about this project at <a href="https://github.com/GhoshRitika/SLAM_ekf">this github link</a> .</h3>
 
