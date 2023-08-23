@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Shared Autonomy Ritika Ghosh</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Ritika Ghosh</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li class="active"><a href="SharedAutonomy.html">Shared Autonomy</a></li>
+                            <li><a href="Resume.html">Resume</a></li>
+                            <li><a href="AboutMe.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="mailto:ritikaghosh2023@u.northwestern.edu" class="icon web application fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://linkedin.com/in/Ritika-Ghosh" class="icon brands fa-linkedin"><span class="label">Linkedln</span></a></li>
+							<li><a href="https://github.com/GhoshRitika" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1> <a href="https://github.com/GhoshRitika/Allegro_hand">Shared Autonomy with Reinforcement Learning</a></h1>
+								</header>
+                  <video width="100%" height="100%" autoplay loop muted>
+                      <source src="images/SharedAutonomy.mp4" type="video/mp4">
+                      <source src="SharedAutonomy.ogg" type="video/ogg">
+                  </video>
+                  <div class="box alt"></div>
+								<header>
+									<h2>Overview</h2>
+									</header>
+									<p>blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah</p>
+                                    <p>Blahhhhhhhhhhhhhhhhhhhhhhhhh </p>
+									<hr />
+
+								<!-- Lists -->
+									<h2>Data Pipeline and Neural Network Architecture</h2>
+                                    <a href="#" class="image fit"><img src="images/Datapipeline.png" alt="" /></a>
+									<div class="row">
+										<div class="col-6 col-12-small">
+                                            <p>Explain the BC and Residual Policy NN</p>
+                                            <p>Explain the pipeline</p>
+                                        </div>
+                                        <div class="col-6 col-12-small">
+                                            <a href="#" class="image fit"><img src="images/AlgorithmRL.png" alt="" /></a>
+                                        </div>
+                                    </div>
+                                    <h2>Lunar Lander</h2>
+									<div class="row">
+										<div class="col-6 col-12-small">
+                                            <p>The mediapipe's gesture recognition repository was re-trained for the gestures relating to grasping hand motions to the desired robot hand configuration. For this purpose 2 ROS python nodes were employed, where the ros2_hgr node estimates the gesture for a give hand pose and publishes an id corresponding to that gesture. The other node gets the id and relates it to previously tested and defined hand configuration.</p>
+                                        </div>
+                                        <div class="col-6 col-12-small">
+                                            <a href="#" class="image fit">
+                                                <video width="100%" height="100%" autoplay loop muted>
+                                                    <source src="images/LunarLanderAss (2).mp4" type="video/mp4">
+                                                    <source src="LunarLanderAss (2).ogg" type="video/ogg">
+                                                </video>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p>This fork was trained for 7 gestures namely, open, close, pinching with index and middle finger, grasping with 3 fingers and 4 fingers and pointing with the index finger.</p>
+                                    <hr />
+									<h2>Franka Panda</h2>
+									<div class="col">
+                                        <div class="row-6 row-12-small">
+                                            <a href="#" class="image fit">
+                                                <video width="100%" height="100%" autoplay loop muted>
+                                                    <source src="images/FrankaReachwAss.mp4" type="video/mp4">
+                                                    <source src="FrankaReachwAss.ogg" type="video/ogg">
+                                                </video>
+                                            </a>
+                                        </div>
+										<div class="row-6 row-12-small">
+                                            <p>Finger_tracking is a ROS 2 python node which uses mediapipe’s hand recognition framework to calculate each of the joint angles of the hand configuration by mapping each joint position to x, y, z in 3D space as shown in the figure above. After applying some simple geometry the angles obtained are retargeted to the 16 robot joints and mapped according to the joint limits. These angles are then published for the motion control section of the process. </p>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <h2>Franka with Multiple Goals</h2>
+									<div class="col">
+                                        <div class="row-6 row-12-small">
+                                            <a href="#" class="image fit">
+                                              <video width="100%" height="100%" autoplay loop muted>
+                                                <source src="images/MultiGoal.mp4" type="video/mp4">
+                                                <source src="MultiGoal.ogg" type="video/ogg">
+                                              </video></a>
+                                        </div>
+										<div class="row-6 row-12-small">
+                                            <p> Allegro_lib is a C++ library compiled to allow the use of Allegro Hand in ROS 2. The allegro_driver uses this library to control the robot hand PD controller and send joint angles for each of the angles. In order to get proper waypoints for a desired trajectory to be executed keeping self collision and joint limits in mind, I configure the Allegro Hand with Moveit!. This allowed for visualization of the resulting joint trajectories and the use of ros controller to calculate the closest viable solutuion to joint angles received from the perception nodes.</p>
+                                        </div>
+                                    </div>
+                                    <hr />
+									<h2>Results</h2>
+									<dl>
+                                        <div class="row">
+                                            <div class="col-6 col-12-small">
+                                                <a href="#" class="image fit"><img src="images/LLplot.png" alt="" /></a>
+                                            </div>
+                                            <div class="col-6 col-12-small">
+                                                <a href="#" class="image fit"><img src="images/Frankaplot.png" alt="" /></a>
+                                            </div>
+                                        </div>
+									</dl>
+
+                                    <h3>Know more about this project at <a href="https://github.com/GhoshRitika/Allegro_hand">this github link</a> .</h3>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
