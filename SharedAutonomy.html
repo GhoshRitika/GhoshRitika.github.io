@@ -53,8 +53,9 @@
 								<header>
 									<h2>Overview</h2>
 									</header>
-									<p>blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah</p>
-                                    <p>Blahhhhhhhhhhhhhhhhhhhhhhhhh </p>
+									<p>This project allows for human robot collaboration with the help of an assistive agent which minimally adjusts the human actions to improve the task performance without any prior knowledge or restrictive assumptions about the environment, goal space or human policy. This is an adaptation of model free
+                                        constrained residual policy using proximal policy optimization for shared control. It has been tested on Lunar Lander and Franka Reach environments.</p>
+                                    <p>Here a joystick is used to interact with the environment, the human uses the joystick to get the human actions and the constrained residual policy provides the assistive actions, a combination of both acts as the actual action that the environment receives.</p>
 									<hr />
 
 								<!-- Lists -->
@@ -62,17 +63,20 @@
                                     <a href="#" class="image fit"><img src="images/Datapipeline.png" alt="" /></a>
 									<div class="row">
 										<div class="col-6 col-12-small">
-                                            <p>Explain the BC and Residual Policy NN</p>
-                                            <p>Explain the pipeline</p>
+                                            <p>The bahavioral cloning agent is a 3 layer neural network with 128 hidden units each, is trained with data collected from human playing in the environment to act as the surragate human policy π_h. The assistive agent is also a 3 layer neural network with 128 hidden units per layer
+                                                and 2 heads, one for the policy and other for the value function. This copilot policy implements a version of constrained proximal policy optimization with the residual learning algorithm. Learn more about this algorithm <a href="https://arxiv.org/pdf/2004.05097.pdf">here</a>
+                                            </p>
                                         </div>
+
                                         <div class="col-6 col-12-small">
                                             <a href="#" class="image fit"><img src="images/AlgorithmRL.png" alt="" /></a>
                                         </div>
+                                        <p>The above datapipeline shows how the human surrogate along with the state of the environment is as an input to the copilot policy which results in the assistive action.</p>
                                     </div>
                                     <h2>Lunar Lander</h2>
 									<div class="row">
 										<div class="col-6 col-12-small">
-                                            <p>The mediapipe's gesture recognition repository was re-trained for the gestures relating to grasping hand motions to the desired robot hand configuration. For this purpose 2 ROS python nodes were employed, where the ros2_hgr node estimates the gesture for a give hand pose and publishes an id corresponding to that gesture. The other node gets the id and relates it to previously tested and defined hand configuration.</p>
+                                            <p>The goal of the lunar lander game is to land the spaceship inbetween the flags using its 3 thrusters to control its motion. It has a 2 dimensional action space and an 8 dimensional observation space in the continuous environment. The human surrogate policy trains over 80 episodes and the residual policy is trained over 10,000 episodes resulting in assistive actions that significantly improve the results.</p>
                                         </div>
                                         <div class="col-6 col-12-small">
                                             <a href="#" class="image fit">
@@ -83,7 +87,6 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <p>This fork was trained for 7 gestures namely, open, close, pinching with index and middle finger, grasping with 3 fingers and 4 fingers and pointing with the index finger.</p>
                                     <hr />
 									<h2>Franka Panda</h2>
 									<div class="col">
@@ -96,7 +99,8 @@
                                             </a>
                                         </div>
 										<div class="row-6 row-12-small">
-                                            <p>Finger_tracking is a ROS 2 python node which uses mediapipe’s hand recognition framework to calculate each of the joint angles of the hand configuration by mapping each joint position to x, y, z in 3D space as shown in the figure above. After applying some simple geometry the angles obtained are retargeted to the 16 robot joints and mapped according to the joint limits. These angles are then published for the motion control section of the process. </p>
+                                            <p>The goal for the FrankaReach environment is for the end effector to reach the desired position where the reward is based in the distance from this desired goal position. This environment uses an Inverse Kinematics controller to move the end effector in the x, y and z planes, therefore has a 3 dimensional action space and a 6 dimensional observation space. In my version, the desired goal can be set by the user or be random.</p>
+                                            <p> A PID controller was used as a human surrogate policy instead of the behavior cloning neural network, since training a good agent through behavioral cloning was requiring a lot of data collected from human. After training the residual policy for 10,000 epsiodes, the assistive actions were successful in improving the efficiency of reaching the goal in reducing the overall time required and the total score.</p>
                                         </div>
                                     </div>
                                     <hr />
@@ -110,7 +114,9 @@
                                               </video></a>
                                         </div>
 										<div class="row-6 row-12-small">
-                                            <p> Allegro_lib is a C++ library compiled to allow the use of Allegro Hand in ROS 2. The allegro_driver uses this library to control the robot hand PD controller and send joint angles for each of the angles. In order to get proper waypoints for a desired trajectory to be executed keeping self collision and joint limits in mind, I configure the Allegro Hand with Moveit!. This allowed for visualization of the resulting joint trajectories and the use of ros controller to calculate the closest viable solutuion to joint angles received from the perception nodes.</p>
+                                            <p>The multi-goal FrankaReach is a new environment designed such that there are 2 goals, a red and a green one. The reward is such that the penalty for being at a distance from the green goal is double the penalty for being at a distance from the red one. The point of this experiment was to observe the behaviour of the assistive agent if the human agent tried to reach the red agent.
+                                                It was observed that the assistive agent prioritized the goal that was closest to the end effector.
+                                            </p>
                                         </div>
                                     </div>
                                     <hr />
@@ -124,6 +130,7 @@
                                                 <a href="#" class="image fit"><img src="images/Frankaplot.png" alt="" /></a>
                                             </div>
                                         </div>
+                                        <p>The above plots shows the accumulated rewards of the environment as it trained. In both the environments it is observed that the assistive agent, inspite of take very minimal actions does infact improve the humans ability to acheive the goals successfully. The total score and the time taken to reach the goal in case of the Franka Reach environment were the metrics used to ascertain the impact of the assistive agent.</p>
 									</dl>
 
                                     <h3>Know more about this project at <a href="https://github.com/GhoshRitika/Allegro_hand">this github link</a> .</h3>
