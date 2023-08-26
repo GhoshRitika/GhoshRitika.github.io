@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Shared Autonomy Ritika Ghosh</title>
+		<title>HRC Ritika Ghosh</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -43,7 +43,7 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<h1> <a href="https://github.com/GhoshRitika/Allegro_hand">Shared Autonomy with Reinforcement Learning</a></h1>
+									<h1> <a href="https://github.com/GhoshRitika/Allegro_hand">Human Robot Collaboration with Reinforcement Learning</a></h1>
 								</header>
                   <video width="100%" height="100%" autoplay loop muted>
                       <source src="images/SharedAutonomy.mp4" type="video/mp4">
@@ -55,23 +55,37 @@
 									</header>
 									<p>This project allows for human robot collaboration with the help of an assistive agent which minimally adjusts the human actions to improve the task performance without any prior knowledge or restrictive assumptions about the environment, goal space or human policy. This is an adaptation of model free
                                         constrained residual policy using proximal policy optimization for shared control. It has been tested on Lunar Lander and Franka Reach environments.</p>
-                                    <p>Here a joystick is used to interact with the environment, the human uses the joystick to get the human actions and the constrained residual policy provides the assistive actions, a combination of both acts as the actual action that the environment receives.</p>
+                                    <p>Here a joystick is used to interact with the environment, the human uses the joystick to get the human actions while the constrained residual policy provides the assistive actions, a combination of both acts as the actual action that the environment receives.</p>
 									<hr />
 
 								<!-- Lists -->
-									<h2>Data Pipeline and Neural Network Architecture</h2>
-                                    <a href="#" class="image fit"><img src="images/Datapipeline.png" alt="" /></a>
+                                <h2>Proximal Policy Optimization</h2>
+                                    <a href="#" class="image fit"><img src="images/PPO_pipeline.png" alt="" /></a>
+									<div class="row">
+                                        <p>Proximal Policy Optimization is an on-policy reinforcement learning method where experiences are collected in batches to update the decision-making policy. It maintains policy continuity by clipping updates, striking a balance between variance and bias. It employs an Actor-Critic approach using a neural net with 3 layers, 128 units each, taking environment observation or state as inputs and producing actions as outputs.
+                                        </p>
+                                    <h2>Behavioral cloning</h2>
+									<div class="row">
+                                        <div class="col-6 col-12-small">
+                                            <a href="#" class="image fit"><img src="images/BC_pipeline.png" alt="" /></a>
+                                        </div>
+                                        <div class="col-6 col-12-small">
+                                            <a href="#" class="image fit"><img src="images/BC_nn.png" alt="" /></a>
+                                        </div>
+                                        <p>To make training more efficient due to high sample requirements of methods like PPO, a surrogate policy π<sub>h</sub>> is used instead of the human policy for training a shared autonomy agent. The behavioral cloning agent, which emulates the human policy, is a 3-layer neural network with 128 hidden units per layer. It's trained using data from human interactions in the environment.</p>
+									<h2>Residual Learning Policy</h2>
+                                    <a href="#" class="image fit"><img src="images/Residual_policy.png" alt="" /></a>
 									<div class="row">
 										<div class="col-6 col-12-small">
-                                            <p>The bahavioral cloning agent is a 3 layer neural network with 128 hidden units each, is trained with data collected from human playing in the environment to act as the surragate human policy π_h. The assistive agent is also a 3 layer neural network with 128 hidden units per layer
-                                                and 2 heads, one for the policy and other for the value function. This copilot policy implements a version of constrained proximal policy optimization with the residual learning algorithm. Learn more about this algorithm <a href="https://arxiv.org/pdf/2004.05097.pdf">here</a>
+                                            <p>Residual policy learning uses a baseline policy π<sub>0</sub> to reduce the sample complexity of reinforcementlearning methods. The learned policy acts by adding a “residual” or corrective action a<sub>r</sub> ∼ π(s, a<sub>0</sub>) to the action a<sub>0</sub> ∼ π<sub>0</sub>(s) provided by the nominal policy. The residual agent can be trained using any reinforcement
+                                            learning algorithm that allows for continuous action spaces, in this case a version of constrained proximal policy optimization was implemented and π<sub>0</sub> is replaced with a human actor. During traing the human actor is replace with the human surrogate π<sub>h</sub>, the pretrained using behavioral cloning policy.</p>
                                             </p>
                                         </div>
 
                                         <div class="col-6 col-12-small">
                                             <a href="#" class="image fit"><img src="images/AlgorithmRL.png" alt="" /></a>
                                         </div>
-                                        <p>The above datapipeline shows how the human surrogate along with the state of the environment is as an input to the copilot policy which results in the assistive action.</p>
+                                        <p>The assistive agent is also a 3 layer neural network with 128 hidden units per layer and 2 heads, one for the policy and other for the value function with the state and human action as inputs. Learn more about this algorithm <a href="https://arxiv.org/pdf/2004.05097.pdf">here</a></p>
                                     </div>
                                     <h2>Lunar Lander</h2>
 									<div class="row">
@@ -89,20 +103,21 @@
                                     </div>
                                     <hr />
 									<h2>Franka Panda</h2>
-									<div class="col">
-                                        <div class="row-6 row-12-small">
+                                    <div class="row-6 row-12-small">
+                                        <div class="col-6 col-12-small">
                                             <a href="#" class="image fit">
                                                 <video width="100%" height="100%" autoplay loop muted>
                                                     <source src="images/FrankaReachwAss.mp4" type="video/mp4">
                                                     <source src="FrankaReachwAss.ogg" type="video/ogg">
                                                 </video>
                                             </a>
-                                        </div>
-										<div class="row-6 row-12-small">
                                             <p>The goal for the FrankaReach environment is for the end effector to reach the desired position where the reward is based in the distance from this desired goal position. This environment uses an Inverse Kinematics controller to move the end effector in the x, y and z planes, therefore has a 3 dimensional action space and a 6 dimensional observation space. In my version, the desired goal can be set by the user or be random.</p>
-                                            <p> A PID controller was used as a human surrogate policy instead of the behavior cloning neural network, since training a good agent through behavioral cloning was requiring a lot of data collected from human. After training the residual policy for 10,000 epsiodes, the assistive actions were successful in improving the efficiency of reaching the goal in reducing the overall time required and the total score.</p>
                                         </div>
-                                    </div>
+                                        <div class="col-6 col-12-small">
+                                            <a href="#" class="image fit"><img src="images/PID_franka.png" alt="" /></a>
+                                            <p> A PID controller was used as a human surrogate policy instead of the behavior cloning neural network, since training a good agent through behavioral cloning was requiring a lot of data collected from human. After training the residual policy for 10,000 epsiodes, the assistive actions were successful in improving the efficiency of reaching the goal in reducing the overall time required and the total score.</p>
+
+                                        </div>
                                     <hr />
                                     <h2>Franka with Multiple Goals</h2>
 									<div class="col">
@@ -133,7 +148,7 @@
                                         <p>The above plots shows the accumulated rewards of the environment as it trained. In both the environments it is observed that the assistive agent, inspite of take very minimal actions does infact improve the humans ability to acheive the goals successfully. The total score and the time taken to reach the goal in case of the Franka Reach environment were the metrics used to ascertain the impact of the assistive agent.</p>
 									</dl>
 
-                                    <h3>Know more about this project at <a href="https://github.com/GhoshRitika/Allegro_hand">this github link</a> .</h3>
+                                    <h2>Know more about this project at <a href="https://github.com/GhoshRitika/LunarLanderRL/">this github link</a> .</h2>
 
 				<!-- Copyright -->
 					<div id="copyright">
